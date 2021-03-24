@@ -2,6 +2,10 @@ import React from "react";
 import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import { useHistory, useLocation } from "react-router";
 
+function generateRandom(min: number, max: number): number {
+  return (rand = Math.floor(min + Math.random() * (max - min)));
+}
+
 function Home() {
   const [min, setMin] = React.useState<number>(0);
   const [max, setMax] = React.useState<number>(100);
@@ -13,21 +17,21 @@ function Home() {
   const inputNumber = location.state.fromForm;
 
   function handleClick(operator: string) {
-    randomlist.push(random);
-    operator === ">" ? setMin(random) : setMax(random);
+    setRandomList([...randomlist, random]);
+    let newRandom;
+    if (operator === ">") {
+      newRandom = generateRandom(random + 1, max);
+      setMin(random + 1);
+    } else {
+      newRandom = generateRandom(min, random - 1);
+      setMax(random - 1);
+    }
+    setRandom(newRandom);
   }
 
   React.useEffect(() => {
-    let rand = Math.floor(min + Math.random() * (max - min));
-    while (!(rand > min && rand < max)) {
-      rand = Math.floor(min + Math.random() * (max - min));
-    }
-    setRandom(rand);
-  }, [min, max]);
-
-  React.useEffect(() => {
     Number(inputNumber) === random && history.push("/end");
-  }, [random]);
+  }, [random, inputNumber, history]);
 
   const randomNumbers = randomlist.map((el) => {
     return (
