@@ -3,7 +3,7 @@ import { Box, Button, ButtonGroup, Heading } from "@chakra-ui/react";
 import { useHistory, useLocation } from "react-router";
 
 function generateRandom(min: number, max: number): number {
-  return (rand = Math.floor(min + Math.random() * (max - min)));
+  return (Math.floor(min + Math.random() * (max - min)));
 }
 
 function Home() {
